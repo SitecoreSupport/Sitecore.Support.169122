@@ -12,7 +12,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Sitecore.Support</RootNamespace>
-    <AssemblyName>Sitecore.Support.166318</AssemblyName>
+    <AssemblyName>Sitecore.Support.166318.162451</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
@@ -64,6 +64,7 @@
     <Reference Include="System.Configuration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ContentSearch\Azure\Converters\CloudIndexFieldStorageValueFormatter.cs" />
     <Compile Include="ContentSearch\Azure\Query\CloudQueryMapper.cs" />
     <Compile Include="ContentSearch\Azure\CloudSearchSearchContext.cs" />
     <Compile Include="ContentSearch\Azure\CloudSearchProviderIndex.cs" />
@@ -71,6 +72,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Config\Include\zzz\Sitecore.Support.166318.162451.config" />
     <None Include="packages.config" />
     <None Include="web.config" />
   </ItemGroup>
