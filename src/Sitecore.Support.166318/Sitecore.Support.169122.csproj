@@ -40,6 +40,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Sitecore.Abstractions, Version=10.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SC.Sitecore.Abstractions.8.2.2\lib\Sitecore.Abstractions.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Sitecore.ContentSearch, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\SC.Sitecore.ContentSearch.8.2.3\lib\Sitecore.ContentSearch.dll</HintPath>
       <Private>False</Private>
@@ -64,11 +68,13 @@
     <Reference Include="System.Configuration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ContentSearch\Azure\CloudSearchUpdateContext.cs" />
     <Compile Include="ContentSearch\Azure\Converters\CloudIndexFieldStorageValueFormatter.cs" />
     <Compile Include="ContentSearch\Azure\Query\CloudQueryMapper.cs" />
     <Compile Include="ContentSearch\Azure\CloudSearchSearchContext.cs" />
     <Compile Include="ContentSearch\Azure\CloudSearchProviderIndex.cs" />
     <Compile Include="ContentSearch\Azure\Query\CloudQueryBuilder\Filter.cs" />
+    <Compile Include="ContentSearch\Azure\Utils\CloudIndexParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

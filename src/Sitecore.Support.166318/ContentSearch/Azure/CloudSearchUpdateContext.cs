@@ -143,7 +143,7 @@
             {
                 lock (this.@lock)
                 {
-                    this.documents.Add(new CloudSearchDocument(concurrentDic, SearchAction.MergeOrUpload));
+                    this.documents.Add(new CloudSearchDocument(concurrentDic, SearchAction.Upload));
                     this.CommitPolicyExecutor.IndexModified(this, concurrentDic, IndexOperation.Update);
                     this.statistics.IncrementUpdateCounter();
                 }
