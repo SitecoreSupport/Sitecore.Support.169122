@@ -30,10 +30,10 @@ namespace Sitecore.Support.ContentSearch.Azure.Converters
                 return null;
             }
 
-            var fieldSchema = ((CloudSearchProviderIndex)searchIndexFieldInfo.GetValue(this)).SchemaBuilder.GetSchema().GetFieldByCloudName(fieldName);
+            var fieldSchema = ((Sitecore.ContentSearch.Azure.CloudSearchProviderIndex)searchIndexFieldInfo.GetValue(this)).SchemaBuilder.GetSchema().GetFieldByCloudName(fieldName);
             if (fieldSchema == null)
             {
-                fieldSchema = ((CloudSearchProviderIndex)searchIndexFieldInfo.GetValue(this)).SearchService.Schema.GetFieldByCloudName(fieldName);
+                fieldSchema = ((Sitecore.ContentSearch.Azure.CloudSearchProviderIndex)searchIndexFieldInfo.GetValue(this)).SearchService.Schema.GetFieldByCloudName(fieldName);
             }
             //Quick fix for computed fields
             if (fieldSchema == null)
@@ -41,7 +41,7 @@ namespace Sitecore.Support.ContentSearch.Azure.Converters
                 return value;
             }
 
-            var cloudTypeMapper = ((CloudSearchProviderIndex)searchIndexFieldInfo.GetValue(this)).CloudConfiguration.CloudTypeMapper;
+            var cloudTypeMapper = ((Sitecore.ContentSearch.Azure.CloudSearchProviderIndex)searchIndexFieldInfo.GetValue(this)).CloudConfiguration.CloudTypeMapper;
             var fieldType = cloudTypeMapper.GetNativeType(fieldSchema.Type);
 
             var context = new IndexFieldConverterContext(fieldName);
