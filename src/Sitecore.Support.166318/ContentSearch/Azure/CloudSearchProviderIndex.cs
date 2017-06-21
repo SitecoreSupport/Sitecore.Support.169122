@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using System.Reflection.Emit;
 using Sitecore.ContentSearch;
 using Sitecore.ContentSearch.Azure.Http;
 using Sitecore.ContentSearch.Azure.Schema;
@@ -26,11 +27,25 @@ namespace Sitecore.Support.ContentSearch.Azure
             return new Sitecore.Support.ContentSearch.Azure.CloudSearchSearchContext(this, options);
         }
 
+        public override IProviderUpdateContext CreateUpdateContext()
+        {
+            if (EnsureInitializedMi != null)
+            {
+                EnsureInitializedMi.Invoke(this, new object[] { });
+            }
+            ICommitPolicyExecutor commitPolicyExecutor = (ICommitPolicyExecutor)this.CommitPolicyExecutor.Clone();
+            commitPolicyExecutor.Initialize(this);
+            return new CloudSearchUpdateContext(this, (ISearchResultsDeserializer)deserializerFi.GetValue(this), commitPolicyExecutor);
+        }
+
         private static readonly MethodInfo EnsureInitializedMi;
+        private static readonly FieldInfo deserializerFi;
         static CloudSearchProviderIndex()
         {
             EnsureInitializedMi =
                 typeof(Sitecore.ContentSearch.Azure.CloudSearchProviderIndex).GetMethod("EnsureInitialized",
+                    BindingFlags.Instance | BindingFlags.NonPublic);
+            deserializerFi = typeof(Sitecore.ContentSearch.Azure.CloudSearchProviderIndex).GetField("deserializer",
                     BindingFlags.Instance | BindingFlags.NonPublic);
         }
     }
