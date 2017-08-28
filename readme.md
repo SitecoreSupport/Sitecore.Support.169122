@@ -16,6 +16,8 @@ instead of
 
 **147386**: Search should return documents which match all terms in a phrase.  
 
+**147550**: Search result contains 50 items by default
+
 ## License  
 This patch is licensed under the [Sitecore Corporation A/S License for GitHub](https://github.com/sitecoresupport/Sitecore.Support.166318/blob/master/LICENSE).  
 
