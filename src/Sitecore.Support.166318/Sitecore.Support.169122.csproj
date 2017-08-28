@@ -40,6 +40,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\SC.Newtonsoft.Json.8.2.3\lib\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Sitecore.Abstractions, Version=10.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\SC.Sitecore.Abstractions.8.2.2\lib\Sitecore.Abstractions.dll</HintPath>
       <Private>False</Private>
@@ -74,6 +79,7 @@
     <Compile Include="ContentSearch\Azure\CloudSearchSearchContext.cs" />
     <Compile Include="ContentSearch\Azure\CloudSearchProviderIndex.cs" />
     <Compile Include="ContentSearch\Azure\Query\CloudQueryBuilder\Filter.cs" />
+    <Compile Include="ContentSearch\Azure\Query\LinqToCloudIndex.cs" />
     <Compile Include="ContentSearch\Azure\Utils\CloudIndexParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

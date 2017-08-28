@@ -31,7 +31,7 @@
         {
             queryMapperFieldInfo = typeof(CloudIndex<TItem>).GetField("queryMapper",
                 BindingFlags.Instance | BindingFlags.NonPublic);
-            LinqToCloudIndex<TItem> linqToCloudIndex = new LinqToCloudIndex<TItem>(this, executionContexts);
+            LinqToCloudIndex<TItem> linqToCloudIndex = new Sitecore.Support.ContentSearch.Azure.Query.LinqToCloudIndex<TItem>(this, executionContexts);
             if (queryMapperFieldInfo != null)
             {
                 queryMapperFieldInfo.SetValue(linqToCloudIndex, new Sitecore.Support.ContentSearch.Azure.Query.CloudQueryMapper(linqToCloudIndex.Parameters));
