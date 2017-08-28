@@ -14,6 +14,8 @@ instead of
 
 **169124**: Some index fields (latestversion, isclone) are not modified during index update
 
+**147386**: Search should return documents which match all terms in a phrase.  
+
 ## License  
 This patch is licensed under the [Sitecore Corporation A/S License for GitHub](https://github.com/sitecoresupport/Sitecore.Support.166318/blob/master/LICENSE).  
 
