@@ -8,6 +8,7 @@ namespace Sitecore.Support.ContentSearch.Azure.Query
     using System.Reflection;
     using Diagnostics;
     using Newtonsoft.Json.Linq;
+    using Sitecore.ContentSearch.Abstractions;
     using Sitecore.ContentSearch.Azure;
     using Sitecore.ContentSearch.Azure.Query;
     using Sitecore.ContentSearch.Azure.Utils;
@@ -24,6 +25,8 @@ namespace Sitecore.Support.ContentSearch.Azure.Query
         private static readonly MethodInfo miApplyScalarMethods;
 
         private static readonly MethodInfo miOptimizeQueryExpression;
+
+        private readonly ISettings settings;
 
         static LinqToCloudIndex()
         {
@@ -42,12 +45,16 @@ namespace Sitecore.Support.ContentSearch.Azure.Query
             : base(context, executionContext)
         {
             this.context = context;
+
+            this.settings = context.Index.Locator.GetInstance<ISettings>();
         }
 
         public LinqToCloudIndex(CloudSearchSearchContext context, IExecutionContext[] executionContexts)
             : base(context, executionContexts)
         {
             this.context = context;
+
+            this.settings = context.Index.Locator.GetInstance<ISettings>();
         }
 
         public override TResult Execute<TResult>(CloudQuery query)
@@ -138,9 +145,13 @@ namespace Sitecore.Support.ContentSearch.Azure.Query
                 }
 
                 // Finalize the query expression
-                var expression = this.OptimizeQueryExpression(query, searchIndex) + "&$count=true";
-
                 // append $count=true to find out total found document, but has performance impact;
+                var expression = this.OptimizeQueryExpression(query, searchIndex) + "&$count=true";
+                
+                if (settings.GetBoolSetting("Support.ContentSearch.AzureSearch.MatchAllTerms", true))
+                {
+                    expression += "&searchMode=all";
+                }
 
                 try
                 {
