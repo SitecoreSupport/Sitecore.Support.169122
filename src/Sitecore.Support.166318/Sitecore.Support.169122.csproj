@@ -74,7 +74,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ContentSearch\Azure\CloudSearchUpdateContext.cs" />
-    <Compile Include="ContentSearch\Azure\Converters\CloudIndexFieldStorageValueFormatter.cs" />
     <Compile Include="ContentSearch\Azure\Query\CloudQueryMapper.cs" />
     <Compile Include="ContentSearch\Azure\CloudSearchSearchContext.cs" />
     <Compile Include="ContentSearch\Azure\CloudSearchProviderIndex.cs" />
