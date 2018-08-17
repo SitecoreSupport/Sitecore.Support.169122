@@ -3,6 +3,8 @@
     using Sitecore.ContentSearch.Azure.Models;
     using Sitecore.ContentSearch.Azure.Query;
     using Sitecore.ContentSearch.Azure.Schema;
+    using Sitecore.ContentSearch.Linq.Parsing;
+
     public class CloudQueryMapper : Sitecore.ContentSearch.Azure.Query.CloudQueryMapper
     {
         public CloudQueryMapper(CloudIndexParameters parameters) : base(parameters)
@@ -15,6 +17,27 @@
             {
                 return this.Parameters.Schema as ICloudSearchIndexSchema;
             }
+        }
+
+        public override CloudQuery MapQuery(IndexQuery query)
+        {
+            var mappingState = new CloudQueryMapperState();
+            var nativeQuery = this.HandleCloudQuery(query.RootNode, mappingState);
+
+            //// If the returned query equal to wildcard string only, the wildcard expression hasn't been constructed yet.
+            //// Hence, fire the wildcard construction
+
+            if (nativeQuery == null)
+            {
+                nativeQuery = string.Empty;
+            }
+
+            if (string.IsNullOrEmpty(nativeQuery) && mappingState.AdditionalQueryMethods.Count == 0 && mappingState.FacetQueries.Count == 0)
+            {
+                nativeQuery = "&search=*";
+            }
+
+            return new CloudQuery(nativeQuery, mappingState.AdditionalQueryMethods, mappingState.FacetQueries, mappingState.VirtualFieldProcessors, this.Parameters.ExecutionContexts);
         }
 
         protected override string HandleGreaterThan(string srcFieldName, object srcValue, float boost)

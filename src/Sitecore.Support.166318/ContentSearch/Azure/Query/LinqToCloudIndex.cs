@@ -24,7 +24,7 @@
 
         private static MethodInfo miGetOrderByExpression;
 
-        private static MethodInfo miGetFacetExpression;
+        private static MethodInfo miGetFacetsExpression;
 
         private readonly ISettings settings;
 
@@ -38,8 +38,8 @@
             miGetOrderByExpression = t.GetMethod("GetOrderByExpression", BindingFlags.Instance | BindingFlags.NonPublic);
             Assert.IsNotNull(miGetOrderByExpression, "miGetOrderByExpression is null...");
 
-            miGetFacetExpression = t.GetMethod("GetFacetExpression", BindingFlags.Instance | BindingFlags.NonPublic);
-            Assert.IsNotNull(miGetFacetExpression, "miGetFacetExpression is null...");
+            miGetFacetsExpression = t.GetMethod("GetFacetsExpression", BindingFlags.Instance | BindingFlags.NonPublic);
+            Assert.IsNotNull(miGetFacetsExpression, "miGetFacetsExpression is null...");
         }
 
         public LinqToCloudIndex(CloudSearchSearchContext context, IExecutionContext executionContext)
@@ -375,24 +375,32 @@
             return (string)miGetOrderByExpression.Invoke(this, new object[] { query, index });
         }
 
-        protected virtual string GetFacetExpression(CloudQuery query, CloudSearchProviderIndex index)
+        protected virtual string GetFacetsExpression(CloudQuery query, CloudSearchProviderIndex index, out string facets)
         {
-            return (string)miGetFacetExpression.Invoke(this, new object[] { query, index });
+            facets = string.Empty;
+            return (string)miGetFacetsExpression.Invoke(this, new object[] { query, index, facets});
         }
 
 
         protected virtual string OptimizeQueryExpression(CloudQuery query, CloudSearchProviderIndex index)
         {
             var expression = query.Expression;
-
+            
             var skip = this.GetSkipParameterValue(query, index);
             string skipParameter = skip == null ? string.Empty : $"&$skip={skip}";
 
             var top = this.GetTopParameterValue(query, index);
 
-            var facetExpression = this.GetFacetExpression(query, index);
+            string facets = string.Empty;
+            var facetExpression = this.GetFacetsExpression(query, index, out facets);
 
             expression = Sitecore.ContentSearch.Azure.Query.CloudQueryBuilder.Merge(expression, facetExpression, "and", Sitecore.ContentSearch.Azure.Query.CloudQueryBuilder.ShouldWrap.Both);
+
+            if (Sitecore.ContentSearch.Azure.Query.CloudQueryBuilder.IsSearchExpression(expression) && !expression.Contains("&queryType="))
+            {
+                expression += "&queryType=full";
+            }
+            expression = $"{expression}{facets}";
 
             var orderByExpression = this.GetOrderByExpression(query, index);
 
