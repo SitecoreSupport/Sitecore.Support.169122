@@ -27,6 +27,8 @@ namespace Sitecore.Support.ContentSearch.Azure
             return new Sitecore.Support.ContentSearch.Azure.CloudSearchSearchContext(this, options);
         }
 
+        public override IIndexOperations Operations => new Sitecore.Support.ContentSearch.Azure.CloudSearchIndexOperations(this);
+
         public override IProviderUpdateContext CreateUpdateContext()
         {
             if (EnsureInitializedMi != null)
