@@ -29,6 +29,19 @@ namespace Sitecore.Support.ContentSearch.Azure
 
         public override IIndexOperations Operations => new Sitecore.Support.ContentSearch.Azure.CloudSearchIndexOperations(this);
 
+        public new ICloudSearchIndexSchemaBuilder SchemaBuilder
+        {
+            get => (this as Sitecore.ContentSearch.Azure.CloudSearchProviderIndex).SchemaBuilder;
+            set => SchemaBuilderPropertyInfo.SetValue(this, value);
+        }
+
+
+        public new ISearchService SearchService
+        {
+            get => (this as Sitecore.ContentSearch.Azure.CloudSearchProviderIndex).SearchService;
+            set => SearchServicePropertyInfo.SetValue(this, value);
+        }
+
         public override IProviderUpdateContext CreateUpdateContext()
         {
             if (EnsureInitializedMi != null)
@@ -42,6 +55,8 @@ namespace Sitecore.Support.ContentSearch.Azure
 
         private static readonly MethodInfo EnsureInitializedMi;
         private static readonly FieldInfo deserializerFi;
+        private static readonly PropertyInfo SearchServicePropertyInfo;
+        private static readonly PropertyInfo SchemaBuilderPropertyInfo;
         static CloudSearchProviderIndex()
         {
             EnsureInitializedMi =
@@ -49,6 +64,12 @@ namespace Sitecore.Support.ContentSearch.Azure
                     BindingFlags.Instance | BindingFlags.NonPublic);
             deserializerFi = typeof(Sitecore.ContentSearch.Azure.CloudSearchProviderIndex).GetField("deserializer",
                     BindingFlags.Instance | BindingFlags.NonPublic);
+            SearchServicePropertyInfo =
+                typeof(Sitecore.ContentSearch.Azure.CloudSearchProviderIndex).GetProperty("SearchService",
+                    BindingFlags.Instance | BindingFlags.Public);
+            SchemaBuilderPropertyInfo =
+                typeof(Sitecore.ContentSearch.Azure.CloudSearchProviderIndex).GetProperty("SchemaBuilder",
+                    BindingFlags.Instance | BindingFlags.Public);
         }
     }
 }
