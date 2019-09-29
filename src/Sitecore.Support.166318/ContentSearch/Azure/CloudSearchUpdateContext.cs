@@ -178,8 +178,11 @@
 
             var searchResults = this.deserializer.Deserialize(search);
 
-            //TODO error handling- should we throw if no documents found or found more than one 
-            //search
+            if (searchResults.Documents == null || searchResults.Documents.Count == 0)
+            {
+                CrawlingLog.Log.Info($"[Index={this.index.Name}] Failed to delete document with id= {id.Value}, document not found");
+                return;
+            }
             this.Delete(searchResults.Documents.First().AzureUniqueId);
         }
 
