@@ -18,6 +18,12 @@ instead of
 
 **147550 (Fixed in 8.2.7)**: Search result contains 50 items by default
 
+**164633 (Fixed in 8.2.4)**: Index document delete operation may fail with an exception if the document is not present in the index
+
+**299679 (Fixed in 9.2.0)**: All item-specific documents may be deleted instead of deleting a document for a specific item version
+
+**136614 (Fixed in 8.2.6)**: Implementation of SchemaBuilder and SearchService properties of a search index do not allow to customize Azure Search provider
+
 ## License  
 This patch is licensed under the [Sitecore Corporation A/S License for GitHub](https://github.com/sitecoresupport/Sitecore.Support.166318/blob/master/LICENSE).  
 
