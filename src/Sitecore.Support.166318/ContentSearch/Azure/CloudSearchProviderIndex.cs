@@ -1,5 +1,4 @@
 ﻿using System.Reflection;
-using System.Reflection.Emit;
 using Sitecore.ContentSearch;
 using Sitecore.ContentSearch.Azure.Http;
 using Sitecore.ContentSearch.Azure.Schema;
@@ -50,19 +49,21 @@ namespace Sitecore.Support.ContentSearch.Azure
             }
             ICommitPolicyExecutor commitPolicyExecutor = (ICommitPolicyExecutor)this.CommitPolicyExecutor.Clone();
             commitPolicyExecutor.Initialize(this);
-            return new CloudSearchUpdateContext(this, (ISearchResultsDeserializer)deserializerFi.GetValue(this), commitPolicyExecutor);
+            return new CloudSearchUpdateContext(this, (ISearchResultsDeserializer)DeserializerFi.GetValue(this), commitPolicyExecutor);
         }
 
         private static readonly MethodInfo EnsureInitializedMi;
-        private static readonly FieldInfo deserializerFi;
+        private static readonly FieldInfo DeserializerFi;
         private static readonly PropertyInfo SearchServicePropertyInfo;
         private static readonly PropertyInfo SchemaBuilderPropertyInfo;
+
         static CloudSearchProviderIndex()
         {
             EnsureInitializedMi =
                 typeof(Sitecore.ContentSearch.Azure.CloudSearchProviderIndex).GetMethod("EnsureInitialized",
                     BindingFlags.Instance | BindingFlags.NonPublic);
-            deserializerFi = typeof(Sitecore.ContentSearch.Azure.CloudSearchProviderIndex).GetField("deserializer",
+            DeserializerFi =
+                typeof(Sitecore.ContentSearch.Azure.CloudSearchProviderIndex).GetField("deserializer",
                     BindingFlags.Instance | BindingFlags.NonPublic);
             SearchServicePropertyInfo =
                 typeof(Sitecore.ContentSearch.Azure.CloudSearchProviderIndex).GetProperty("SearchService",
