@@ -24,6 +24,8 @@ instead of
 
 **136614 (Fixed in 8.2.6)**: Implementation of SchemaBuilder and SearchService properties of a search index do not allow to customize Azure Search provider
 
+**362127 (Fixed in 9.2.0)**: The Final Rendering field was not excluded from indexing which could led to skipping some items during indexing
+
 ## License  
 This patch is licensed under the [Sitecore Corporation A/S License for GitHub](https://github.com/sitecoresupport/Sitecore.Support.166318/blob/master/LICENSE).  
 
